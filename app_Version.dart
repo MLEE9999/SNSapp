@@ -50,20 +50,12 @@ class _appVersionPageState extends State<appVersionPage> {
             title: Text('앱버전', style: TextStyle(fontWeight: FontWeight.w300, color: Color(0xff797979))) // 상단바에 텍스트로 '프로필 편집' 출력, 글자의 두께를 줄임
         ),
       body: Container(
-        child:Column(
-          children:[
-            Expanded(
-                child: Container(
-            ),flex:1),
-            Expanded(
-                child: Container(
-                    child: Text('버전명', style: TextStyle(fontSize:50, fontWeight: FontWeight.bold, color: Colors.black))// 상단바에 텍스트로 '프로필 편집' 출력, 글자의 두께를 줄임
-            ),flex:1),
-            Expanded(
-                child: Container(
-            ),flex:1)
-          ]
-        )
+          child : Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 70),
+                child: Text('버전명', style: TextStyle(fontSize:50, fontWeight: FontWeight.bold, color: Colors.black)),
+              )// 상단바에 텍스트로 '프로필 편집' 출력, 글자의 두께를 줄임
+          )
       ),
     );
   }
