@@ -122,7 +122,7 @@ class _profileEditPageState extends State<profileEditPage> {
     });
   }
 
-  String Name="", State="";
+  String Nickname="", State="";
 
   @override
   Widget build(BuildContext context) {
@@ -212,9 +212,10 @@ class _profileEditPageState extends State<profileEditPage> {
                   child: ElevatedButton( // 텍스트 버튼 위젯
                       onPressed: () async {
                         setState(() {
-                          Name=edit_inputName.text;
+                          Nickname=edit_inputName.text;
                         });
-                        await http.get(Uri.parse('http://www.teamtoktok.kro.kr/이름변경.php?user='+widget.userEmail+'&name='+Name));
+                        await http.get(Uri.parse('http://www.teamtoktok.kro.kr/내이름변경.php?user1='+widget.userEmail+'&Nickname='+Nickname)); // 닉네임변경
+                        //http://www.teamtoktok.kro.kr/이름변경.php?user=Leeeunsoo&name=leeeunsu2 //이름변경시
                       },
                       child: Text('이름 변경', style: TextStyle(color: Colors.black, fontSize: 16)) // 볼드체, 크기 16, 색상 검정
                   ),
