@@ -3,6 +3,7 @@ import 'package:application_20221022/main.dart';
 import 'package:application_20221022/post_list.dart';
 import 'package:application_20221022/profile_edit.dart';
 import 'package:application_20221022/block_List.dart';
+import 'package:application_20221022/app_Version.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
@@ -31,7 +32,8 @@ class my_List extends StatelessWidget {
         '/chatList' : (context) => chat_List(), // chat_List 페이지로 값을 넘겨주기 위함
         '/postList' : (context) => post_List(), // post_List 페이지로 값을 넘겨주기 위함
         '/profileEdit' : (context) => profile_edit(),
-        '/blockList' : (context) => block_List()
+        '/blockList' : (context) => block_List(),
+        '/appVersion' : (context) => app_Version()
       },
       debugShowCheckedModeBanner: false,
       home: MyListPage(userEmail: usEmail.userEmail, userName: usEmail.userName, userStateMsg: usEmail.userStateMsg)
@@ -228,7 +230,7 @@ class _MyListPageState extends State<MyListPage> {
                   ),
                   child: TextButton( // 텍스트 버튼 위젯
                     onPressed: (){
-
+                      Navigator.pushNamed(context, '/appVersion', arguments: appVersion_UserEmail(userEmail: widget.userEmail, userName: widget.userName, userStateMsg: widget.userStateMsg)); // 전체 목록 페이지로 이동 및 인자값 전달
                     },
                     child: Padding( // 여백을 주기 위해 사용하는 위젯
                       padding: EdgeInsets.fromLTRB(10, 0, 0, 0), // 왼 10 위 0 아래 0 우 0의 여백을 줌
