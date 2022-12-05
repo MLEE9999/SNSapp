@@ -3,10 +3,14 @@ import 'package:application_20221022/NewsListfile.dart';
 import 'package:application_20221022/blockListfile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parse;
 import 'package:application_20221022/my_List.dart';
+import 'dart:async';
+import 'dart:io';
 
 class NewsList_UserEmail{
   final String userEmail;
@@ -15,6 +19,8 @@ class NewsList_UserEmail{
 
   NewsList_UserEmail({required this.userEmail, required this.userName, required this.userStateMsg});
 }
+
+
 
 class News extends StatelessWidget {
   const News({Key? key}) : super(key: key);
@@ -66,6 +72,7 @@ class _NewsListPageState extends State<NewsListPage> {
   static List<String> News_split_info = [];
 
   void initState(){
+    super.initState();
     getFriendInfo();
   }
 
@@ -112,23 +119,60 @@ class _NewsListPageState extends State<NewsListPage> {
     });
   }
 
+  Future<bool> _onBackPressed(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Do you want to exit?'),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('No'),
+            onPressed: () => Navigator.pop(context),
+          ),
+          TextButton(
+            child: const Text('Yes'),
+            onPressed: () => SystemNavigator.pop(),
+          ),
+        ],
+      ),
+    );
+    return false;
+  }
+
+  ooon(){
+    return WillPopScope(child: TextButton(onPressed: () async {
+      await launch('tel:11111111111'); // String 형으로 ('tel:'+전화번호) 넣으면 됩니다
+    },
+    child: Text("call")), onWillPop: (){SystemNavigator.pop(); return Future.value(false);}); // 뒤로가기 버튼 활성화인데 작동안됨
+  }
+
   @override
   Widget build(BuildContext context){
-    final List<NewsListfile> userData = List.generate(News_Read_Uid.length, (index) =>
-        NewsListfile(LoginuserEmail[index], LoginuserName[index], LoginuserStateMsg[index], News_Uid[index], News_Title[index], News_Contents[index], News_Time[index]));
-
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: IconButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/myList', arguments: MyList_UserEmail(userEmail: widget.userEmail, userName: widget.userName, userStateMsg: widget.userStateMsg)); // 전체 목록 페이지로 이동 및 인자값 전달
-            },
-            icon: Icon(Icons.arrow_back, color: Colors.grey) // 뒤로가기 모양의 아이콘, 색상은 회색
+    List<NewsListfile> userData = List.generate(News_Read_Uid.length, (index) =>
+         NewsListfile(LoginuserEmail[index], LoginuserName[index], LoginuserStateMsg[index], News_Uid[index], News_Title[index], News_Contents[index], News_Time[index]));
+    String c="sad";
+    return ooon(/*WillPopScope(child: Text(c), onWillPop: (){
+      return Future(() => false);
+    }*/
+    /*,
+        child:Scaffold(
+        resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            leading: IconButton(
+              onPressed: (){
+                Navigator.pushNamed(context, '/myList', arguments: MyList_UserEmail(userEmail: widget.userEmail, userName: widget.userName, userStateMsg: widget.userStateMsg)); // 전체 목록 페이지로 이동 및 인자값 전달
+              },
+              icon: Icon(Icons.arrow_back, color: Colors.grey) // 뒤로가기 모양의 아이콘, 색상은 회색
+            ),
+            title: Text('공지사항', style: TextStyle(fontWeight: FontWeight.w300, color: Color(0xff797979))) // 상단바에 텍스트로 '프로필 편집' 출력, 글자의 두께를 줄임
           ),
-          title: Text('공지사항', style: TextStyle(fontWeight: FontWeight.w300, color: Color(0xff797979))) // 상단바에 텍스트로 '프로필 편집' 출력, 글자의 두께를 줄임
-        )
+          body: Center(
+              child: Container(
+                child: Text("..")
+              )
+          )
+      )*/
     );
   }
 }
